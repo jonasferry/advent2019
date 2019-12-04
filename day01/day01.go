@@ -38,7 +38,7 @@ func fuel2(m int) int {
 	return totalfuel
 }
 
-func testf1() {
+func test1() {
 		// Test input
 		fmt.Println("\nTest Day01#1")		
 		fmt.Println("mass 12: ", fuel1(12))
@@ -47,7 +47,7 @@ func testf1() {
 		fmt.Println("mass 100756: ", fuel1(100756))
 }
 
-func testf2() {
+func test2() {
 		// Test input
 		fmt.Println("\nTest Day01#2")	
 		fmt.Println("mass 12: ", fuel2(12))
@@ -58,7 +58,7 @@ func testf2() {
 
 func Run1(test bool) int { 
 	if test {
-		testf1()
+		test1()
 		return 0
 
 	} else {
@@ -81,7 +81,7 @@ func Run1(test bool) int {
 
 func Run2(test bool) int { 
 	if test {
-		testf2()
+		test2()
 		return 0
 
 	} else {
