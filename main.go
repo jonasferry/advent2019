@@ -9,7 +9,7 @@ import (
 
 func main() {
 	day := 2
-	test := true
+	test := false
 
 	switch day {
 	case 1:

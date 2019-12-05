@@ -17,104 +17,95 @@ func splitStr(in string) (out []int) {
 	return prog
 }
 
-func parseProg(input string) (instr [][]int) {
-	util.Debug(false)
-	prog := splitStr(input)
-	log.Println("prog: ", prog)
-	pc := 0
-	instr = [][]int{}
-	log.Println("len(prog): ", len(prog))
-	i := 0
-	for pc < len(prog) {
-		log.Println("pc: ", pc)
-		switch prog[pc] {
-		case 1:
-			log.Println("parseProg: ", prog[pc:pc+4], " ADD")
-			instr = append(instr, prog[pc:pc+4])
-			pc = pc+4
-			break
-		case 2:
-			log.Println("parseProg: ", prog[pc:pc+4], " MULT")
-			instr = append(instr, prog[pc:pc+4])
-			pc = pc+4
-			break
-		case 99:
-			log.Println("parseProg: ", prog[pc], " END")
-			instr = append(instr, prog[pc:pc+1])
-			pc++
-			break
-		default:
-			log.Println("parseProg: ", prog[pc], " NOP")
-			pc++
-			break
-		}
-		i++	
+func unsplitStr(in []int) (out string) {
+	out = ""
+	for i := range in {
+		out = out + "," + strconv.Itoa(in[i])
 	}
-	return instr
+	return out[1:]
 }
 
-func execute(input string, instrIn [][]int) (output []int) {
+func execute(prog []int) (output []int) {
 	util.Debug(false)
-	prog := splitStr(input)
-	output = prog
 	log.Println("prog: ", prog)
-	log.Println("output: ", output, "\n")
-	for i := 0; i < len(instrIn); i++ {
-		instr := instrIn[i]
-		switch instr[0] {
+	pc := 0
+	for pc < len(prog) {
+		switch prog[pc] {
 		case 1:
-			log.Println("progIn: ", output)
-			log.Println("execIn: ", instr, " ADD")
-			op1 := output[instr[1]]
-			op2 := output[instr[2]]
-			output[instr[3]] = op1 + op2
-			log.Println("progOut: ", output)
+			log.Println("progIn", pc, ": ", prog)
+			log.Println("execIn", pc, ": ", prog[pc], " ADD")
+			log.Println("ADD pc", pc, 
+				" op1", prog[pc+1], 
+				" op2", prog[pc+2], 
+				" at pos", prog[pc+3])
+			prog[prog[pc+3]] = prog[prog[pc+1]] + prog[prog[pc+2]]
+			log.Println("progOut: ", prog)
+			pc = pc + 4
 			break
 		case 2:
-			log.Println("progIn: ", output)
-			log.Println("execIn: ", instr, " MULT")
-			op1 := output[instr[1]]
-			op2 := output[instr[2]]
-			output[instr[3]] = op1 * op2
-			log.Println("progOut: ", output)
+			log.Println("progIn", pc, ": ", prog)
+			log.Println("execIn", pc, ": ", prog[pc], " MULT")
+			prog[prog[pc+3]] = prog[prog[pc+1]] * prog[prog[pc+2]]
+			log.Println("progOut: ", prog)
+			pc = pc + 4
 			break
 		case 99:
-			log.Println("execIn: ", instr, " END")
-			return output
+			log.Println("execIn", pc, ": ", prog[pc], " END")
+			return prog
 		default:
-			log.Println("execIn: ", instr, " NOP")
+			log.Println("execIn", pc, ": ", prog[pc], " NOP")
+			pc++
 			break
 		}
 	}
 	return
 }
 
-func test1() {
-	inputs := []string{
+func test1() int {
+	inputs := []string {
 		"1,9,10,3,2,3,11,0,99,30,40,50",
 		"1,0,0,0,99",
 		"2,4,4,5,99,0",
 		"1,1,1,4,99,5,6,0,99"}
 
-		util.Debug(true)
+		util.Debug(false)
 		log.Println("len input: ", len(inputs))
+
+	execedProg := []int {}
 
 	for i := range inputs {
 		util.Debug(true)
-		input := inputs[i]
-		log.Println("input", i, ": ", splitStr(input))
-		parsedProg := parseProg(input)
-		execedProg := execute(input, parsedProg)
+		log.Println("\n")
+		log.Println("input", i, ": ", inputs[i])
+		execedProg = execute(splitStr(inputs[i]))
 		util.Debug(true)
-		log.Println(" exec: ", execedProg)
+		log.Println(" exec", i, ": ", execedProg)
 	}
+	return execedProg[0]
 }
 
 func Run1(test bool) int {
 	if test {
-		test1()
-		return 0
+		return test1()
 	} else {
-		return 0
+		lines, err := util.ReadF("day02/input.txt")
+		if err != nil {
+			return -1
+		}
+
+		input := splitStr(lines[0])
+
+		// Updated data according to problem
+		input[1] = 12
+		input[2] = 2
+
+		util.Debug(false)
+		log.Println("\n")
+		log.Println(input)
+		log.Println("input:", input)
+		execedProg := execute(input)
+		util.Debug(true)
+		log.Println(" exec:", execedProg)
+		return execedProg[0]
 	}
 }
