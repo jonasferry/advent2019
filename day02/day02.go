@@ -104,7 +104,7 @@ func Run1(test bool) int {
 		log.Println(input)
 		log.Println("input:", input)
 		execedProg := execute(input)
-		util.Debug(true)
+		util.Debug(false)
 		log.Println(" exec:", execedProg)
 		return execedProg[0]
 	}
