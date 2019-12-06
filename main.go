@@ -1,8 +1,8 @@
 package main
 
-import "fmt"
-
 import (
+	"fmt"
+
 	"github.com/jonasferry/advent2019/day01"
 	"github.com/jonasferry/advent2019/day02"
 )
@@ -25,15 +25,15 @@ func main() {
 		} else {
 			fmt.Println("Day01#1: ", answer, "wrong")
 		}
-	} 
+	}
 
-	if day == 2 || day == 0 { 
+	if day == 2 || day == 0 {
 		answer = day02.Run1(test)
 		if answer == 4330636 {
 			fmt.Println("Day02#1: ", answer, "correct")
 		} else {
 			fmt.Println("Day02#1: ", answer, "wrong")
 		}
-//		fmt.Println("Day02#2: ", day02.Run2(test))
+		//		fmt.Println("Day02#2: ", day02.Run2(test))
 	}
 }
