@@ -3,18 +3,8 @@ package util
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"os"
 )
-
-func Debug(debug bool) {
-	if debug {
-		log.SetOutput(os.Stdout)
-	} else {
-		log.SetOutput(ioutil.Discard)
-	}
-}
 
 func ReadF(path string) (lines []string, err error) {
 	// Read input file into variable d (data)
@@ -44,4 +34,3 @@ func ReadF(path string) (lines []string, err error) {
 	//d, _ := ioutil.ReadFile("input.txt")
 	//fmt.Print(string(d))	// test
 }
-
